@@ -106,16 +106,14 @@ and escaped buf = parse
   | '"' {Buffer.add_char buf '"'; str buf lexbuf}
   | '\\' {Buffer.add_char buf '\\'; str buf lexbuf} 
   | [' ' '\t' '\n']+ '\\' as skip {
-      print_endline "multiline";
-      let rec count_newlines s = match s with
-        "" -> 0
+      let rec incr_newlines s n = match s with
+        "" -> ()
       | _ -> let len = String.length s in
         let hd, tl = (String.get s 0), (String.sub s 1 (len - 1)) in
-        (if hd = '\n' then 1 else 0) + (count_newlines tl)
+        (if hd = '\n' then nextLine n; incr_newlines tl (n+1))
       in
-      for i = 1 to count_newlines skip do 
-        print_endline (string_of_int i)
-      done; str buf lexbuf
+      incr_newlines skip (lpos lexbuf);
+      str buf lexbuf
     }
 and comment level = parse
   | "/*" {comment (level + 1) lexbuf}

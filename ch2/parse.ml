@@ -1,7 +1,7 @@
 let parse filename =
   let file = open_in filename in
   let lexbuf = Lexing.from_channel file in
-  let lexer = Lex.tokenize lexbuf in
+  let lexer = Lexer.tokenize lexbuf in
   let rec do_it () =
     let t = lexer in
     print_endline lexer;

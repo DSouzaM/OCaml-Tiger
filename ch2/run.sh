@@ -1,8 +1,8 @@
 ocamlbuild 'parse.byte' || { echo "Failed to compile."; exit 1; }
-[ -e "textoutput.txt" ] && rm testoutput.txt
+[ -e "output.txt" ] && rm output.txt
 
 for testfile in ../testcases/*; do
-	echo "testing $testfile" >> testoutput.txt
-	./parse.byte $testfile >> testoutput.txt || { echo "Failed to parse file $testfile." ; exit 1; }
-	echo "----" >> testoutput.txt
+	echo "testing $testfile" >> output.txt
+	./parse.byte $testfile >> output.txt || { echo "Failed to parse file $testfile." ; exit 1; }
+	echo "----" >> output.txt
 done
