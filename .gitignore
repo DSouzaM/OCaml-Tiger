@@ -2,5 +2,6 @@
 *.cmo
 *.cmi
 *.byte
+**/*.output
 **/output.txt
 **/test.txt
